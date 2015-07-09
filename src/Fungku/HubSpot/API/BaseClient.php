@@ -30,7 +30,7 @@ class BaseClient
     protected $API_VERSION;
     protected $isTest = false;
     protected $PATH_DIV = '/';
-    protected $KEY_PARAM = '?hapikey=';
+    protected $KEY_PARAM = '?access_token=';
     protected $PROD_DOMAIN = 'https://api.hubapi.com';
     protected $QA_DOMAIN = 'https://hubapiqa.com';
     protected $userAgent;    // new

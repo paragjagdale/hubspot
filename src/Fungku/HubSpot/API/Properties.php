@@ -122,12 +122,13 @@ class Properties extends BaseClient{
 		$endpoint = 'properties/'.$name;
 
 		try{
-			return $this->new_execute_delete_request($this->get_request_url($endpoint,null));
+			return json_decode($this->execute_delete_request($this->get_request_url($endpoint,null),null));
 		}
 		catch(HubSpotException $e){
 			print_r('Unable to delete property: '.$e);
 		}
 	}
+
 
 	/**
 	* Get all Properties Groups
@@ -238,6 +239,19 @@ class Properties extends BaseClient{
 			print_r('Unable to delete property group: '.$e);
 		}
 
+	}
+
+	public function get_property($name){
+		$endpoint = 'properties/named/'.$name;
+		$this->API_VERSION = 'v2';
+		try{
+			$ret = json_decode($this->execute_get_request($this->get_request_url($endpoint,null)));
+			$this->API_VERSION = 'v1';
+			return $ret;
+		}
+		catch(hubspotexception $e){
+			print_r('unable to get property: '.$e);
+		}
 	}
 
 
