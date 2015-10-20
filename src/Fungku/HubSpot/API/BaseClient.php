@@ -30,7 +30,7 @@ class BaseClient
     protected $API_VERSION;
     protected $isTest = false;
     protected $PATH_DIV = '/';
-    protected $KEY_PARAM = '?hapikey=';
+    protected $KEY_PARAM = '?access_token=';
     protected $PROD_DOMAIN = 'https://api.hubapi.com';
     protected $QA_DOMAIN = 'https://hubapiqa.com';
     protected $userAgent;    // new
@@ -188,6 +188,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);    // new
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $output = curl_exec($ch);
         $errno = curl_errno($ch);
         $error = curl_error($ch);
@@ -219,7 +220,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);    // new
-
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         if ($formenc)
         {
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
@@ -257,6 +258,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);    // new
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));    // new
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $output = curl_exec($ch);
         $errno = curl_errno($ch);
         $error = curl_error($ch);
@@ -289,6 +291,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/atom+xml'));
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $output = curl_exec($ch);
         $errno = curl_errno($ch);
         $error = curl_error($ch);
@@ -321,6 +324,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $result = curl_exec($ch);
         $apierr = curl_errno($ch);
         $errmsg = curl_error($ch);
@@ -353,6 +357,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $result = curl_exec($ch);
         $apierr = curl_errno($ch);
         $errmsg = curl_error($ch);
@@ -385,6 +390,7 @@ class BaseClient
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_ENCODING , "gzip");		//added by sameer.
         $result = curl_exec($ch);
         $apierr = curl_errno($ch);
         $errmsg = curl_error($ch);
