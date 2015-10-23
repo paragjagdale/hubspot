@@ -53,16 +53,19 @@ class Workflows extends BaseClient {
 	*
 	* @throws HubSpotException
 	**/
-	public function get_workflow_by_ID($id){
-		$endpoint = 'workflows/'.$id;
-		try{
-			return json_decode($this->execute_get_request($this->get_request_url($endpoint,null)));
-		}
-		catch(HubSpotException $e){
-			throw new HubSpotException('Unable to get workflow: '.$e);
-		}
-	}
+    public function get_workflow_by_ID($id){
 
+                  $endpoint = 'workflows/'.$id;
+                              $this->API_VERSION = 'v3';
+                              try{
+                                                    return json_decode($this->execute_get_request($this->get_request_url($endpoint,null)));
+                                                                         $this->API_VERSION = 'v2';
+                                                                }
+              catch(HubSpotException $e){
+                                     $this->API_VERSION = 'v2';
+                                                         throw new HubSpotException('Unable to get workflow: '.$e);
+                                                 }
+      }
 	/**
 	* Enroll Contact in Workflow
 	*
@@ -164,6 +167,34 @@ class Workflows extends BaseClient {
 			throw new HubSpotException('Unable get upcoming events for contact: '.$e);
 		}
 	}
+
+  public function create_workflow($params){
+
+    $properties = json_encode($params);
+    $endpoint = 'workflows';
+
+    $this->API_VERSION = 'v3';
+    try{
+      return json_decode($this->execute_JSON_post_request($this->get_request_url($endpoint,null),$properties));
+      $this->API_VERSION = 'v2';
+    }
+    catch(HubSpotException $e){
+      $this->API_VERSION = 'v2';
+      throw new HubSpotException('Unable to create workflow: '.$e);
+    }
+  }
+
+       public function delete_workflow($wfID){
+	       $this->API_VERSION = 'v3';
+	       $endpoint = 'workflows/'.$wfID;
+	       try {
+		       return $this->execute_delete_request($this->get_request_url($endpoint,null),null);
+		       $this->API_VERSION = 'v2';
+	       } catch (HubSpotException $e) {
+		       $this->API_VERSION = 'v2';
+		       print_r('Unable to unenroll contact: '.$e);
+	       }
+       }
 
 }
 

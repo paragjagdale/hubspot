@@ -80,7 +80,7 @@ class Lists extends BaseClient {
 	public function delete_list($id){
 		$endpoint = 'lists/'.$id;
 		try{
-			return json_decode($this->execute_delete_request($this->get_request_url($endpoint,null)));
+			return json_decode($this->execute_delete_request($this->get_request_url($endpoint,null),null));
 		}
 		catch(HubSpotException $e){
 			print_r("Unable to delete list: ".$e);
