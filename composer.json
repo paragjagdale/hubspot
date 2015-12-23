@@ -1,19 +1,28 @@
 {
-    "name": "fungku/hubspot",
-    "description": "HubSpot PHP API client (wrapper for haPiHP)",
+    "name": "fungku/hubspot-php",
+    "description": "HubSpot PHP API client",
+    "keywords": [ "hubspot", "api" ],
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "fungku",
+            "name": "Ryan Winchester (fungku)",
             "email": "fungku@gmail.com"
+        },
+        {
+            "name": "Stuart Fyfe",
+            "email": "stuartfyfe86@gmail.com"
         }
     ],
     "require": {
         "php": ">=5.3.0"
     },
+    "require-dev": {
+        "php": ">=5.4.0",
+        "phpspec/phpspec": "~2.0"
+    },
     "autoload": {
-        "psr-0": {
-            "Fungku\\HubSpot": "src/"
+        "psr-4": {
+            "Fungku\\HubSpot\\": "src/"
         }
     },
     "minimum-stability": "stable"
