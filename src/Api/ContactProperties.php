@@ -34,7 +34,7 @@ class ContactProperties extends Api
      */
     public function get($name)
     {
-        $endpoint = "contacts/v2/properties/named/{$name}";
+        $endpoint = "/contacts/v2/properties/named/{$name}";
 
         return $this->request('get', $endpoint);
     }
