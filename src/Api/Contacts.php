@@ -19,6 +19,14 @@ class Contacts extends Api
     {
         $endpoint = "/contacts/v1/contact";
 
+        //added code from old Hubspot api..
+        $params=$properties;
+        $properties = array();
+        foreach ($params as $key => $value) {
+                array_push($properties, array("property"=>$key,"value"=>$value));
+        }
+        //end
+
         $options['json'] = array('properties' => $properties);
 
         return $this->request('post', $endpoint, $options);
@@ -36,6 +44,14 @@ class Contacts extends Api
     {
         $endpoint = "/contacts/v1/contact/vid/{$id}/profile";
 
+        //added code from old Hubspot api..
+        $params=$properties;
+        $properties = array();
+        foreach ($params as $key => $value) {
+                array_push($properties, array("property"=>$key,"value"=>$value));
+        }
+        //end
+
         $options['json'] = array('properties' => $properties);
 
         return $this->request('post', $endpoint, $options);
@@ -52,6 +68,14 @@ class Contacts extends Api
     public function createOrUpdate($email, array $properties)
     {
         $endpoint = "/contacts/v1/contact/createOrUpdate/email/{$email}";
+
+        //added code from old Hubspot api..
+        $params=$properties;
+        $properties = array();
+        foreach ($params as $key => $value) {
+                array_push($properties, array("property"=>$key,"value"=>$value));
+        }
+        //end
 
         $options['json'] = array('properties' => $properties);
 
