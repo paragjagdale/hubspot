@@ -3,6 +3,7 @@
 namespace Fungku\HubSpot\Http;
 
 use Fungku\HubSpot\Contracts\HttpClient;
+use \Httpful\Request as HttpfulClient;
 
 class Client implements HttpClient
 {
@@ -11,15 +12,14 @@ class Client implements HttpClient
      */
     protected $client;
 
-    const USER_AGENT = 'Fungku_HubSpot_PHP/0.9 (https://github.com/fungku/hubspot-php)';
     /**
      * Make it, baby.
      *
      * @param \Client $client
      */
-    public function __construct(HttpClient $client = null)
+    public function __construct($client = null)
     {
-        $this->client = $client;
+        //$this->client = $client ?: HttpfulClient;
     }
 
     /**
@@ -28,7 +28,7 @@ class Client implements HttpClient
      * @param string $method
      * @param string $url
      * @param array  $options
-     * @return \CurlResponse
+     * @return \HttpfulClient\Response
      */
     private function makeRequest($method, $url, $options)
     {
@@ -49,70 +49,26 @@ class Client implements HttpClient
                     $urlencode .= "&{$k}={$item}";
             }
         }
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
         
-        switch($method)
-        {
-            case 'GET':            
-            break;
-
-            case 'POST':
-                curl_setopt($ch, CURLOPT_POST, true);
-                if(!empty($options['json'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($options['json']));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                }
-
-                if(!empty($options['body'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($urlencode));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-                }
-
-            break;
-
-            case 'PUT':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-                if(!empty($options['json'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($options['json']));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                }
-
-                if(!empty($options['body'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($urlencode));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-                }
-            break;
-
-            case 'DELETE':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-                if(!empty($options['json'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($options['json']));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-                }
-
-                if(!empty($options['body'])){
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($urlencode));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-                }
-            break;
-            default:
+        if(!empty($options['json'])){
+            $response = HttpfulClient::$method($url)
+                            ->body(json_encode($options['json']))
+                            ->sendsJson()
+                            ->send(); 
         }
-        
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_USERAGENT, self::USER_AGENT);          
-        curl_setopt($ch, CURLOPT_ENCODING , "gzip");           
-        $output = curl_exec($ch);
-        $errno = curl_errno($ch);
-        $error = curl_error($ch);
-        curl_close($ch);
-        if ( $errno > 0 )
-            throw new Exception('cURL error: ' . $error);
+        elseif(!empty($options['body'])){
+            $response = HttpfulClient::$method($url)
+                            ->body(json_encode($options['body']))
+                            ->sendsForm()
+                            ->send();
+        } 
         else
-            return json_decode($output, true);
+        {
+            $response = HttpfulClient::$method($url)
+                            ->send();
+        }            
+        
+        return $response->body;
     }
 
     /**
@@ -122,8 +78,7 @@ class Client implements HttpClient
      */
     public function get($url, $options = array())
     {
-        
-        return $this->makeRequest('GET', $url, $options);
+        return $this->makeRequest('get', $url, $options);
     }
 
     /**
@@ -133,7 +88,7 @@ class Client implements HttpClient
      */
     public function post($url, $options = array())
     {
-        return $this->makeRequest('POST', $url, $options);
+        return $this->makeRequest('post', $url, $options);
     }
 
     /**
@@ -143,7 +98,7 @@ class Client implements HttpClient
      */
     public function put($url, $options = array())
     {
-        return $this->makeRequest('PUT', $url, $options);
+        return $this->makeRequest('put', $url, $options);
     }
 
     /**
@@ -153,6 +108,6 @@ class Client implements HttpClient
      */
     public function delete($url, $options = array())
     {
-        return $this->makeRequest('DELETE', $url, $options);
+        return $this->makeRequest('delete', $url, $options);
     }
 }
