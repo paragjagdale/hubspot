@@ -14,6 +14,13 @@ class Companies extends Api
     public function create($properties)
     {
         $endpoint = '/companies/v2/companies/';
+        //added code from old Hubspot api..
+        $params=$properties;
+        $properties = array();
+        foreach ($params as $key => $value) {
+                array_push($properties, array("name"=>$key,"value"=>$value));
+        }
+        //end
         $options['json'] = array('properties' => $properties);
 
         return $this->request('post', $endpoint, $options);
@@ -29,6 +36,13 @@ class Companies extends Api
     public function update($id, $properties)
     {
         $endpoint = "/companies/v2/companies/{$id}";
+        //added code from old Hubspot api..
+        $params=$properties;
+        $properties = array();
+        foreach ($params as $key => $value) {
+                array_push($properties, array("name"=>$key,"value"=>$value));
+        }
+        //end
         $options['json'] = array('properties' => $properties);
 
         return $this->request('put', $endpoint, $options);
