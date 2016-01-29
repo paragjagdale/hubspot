@@ -26,7 +26,7 @@ class Events extends Api
         $eventId,
         $contactEmail = null,
         $contactRevenue = null,
-        array $contactProperties 
+        $contactProperties = array()
     ) {
         $endpoint = sprintf(
             '/event?_a=%s&_n=%s',
@@ -35,7 +35,7 @@ class Events extends Api
         );
 
         if ($contactEmail !== null) {
-            $endpoint .= '&email=' . urlencode($contactEmail);
+            $endpoint .= '&email=' . $contactEmail;
         }
 
         if ($contactRevenue !== null) {
@@ -48,6 +48,8 @@ class Events extends Api
             }
         }
 
-        $this->request('get', $endpoint);
+        $url = self::BASE_URL . $endpoint;
+
+        return $this->requestUrl('get', $url, array());
     }
 }
