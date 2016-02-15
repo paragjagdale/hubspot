@@ -40,9 +40,9 @@ class Workflows extends Api
      */
     public function enrollContact($workflow_id, $email)
     {
-        $endpoint = "/automation/v3/workflows/{$workflow_id}/enrollments/contacts/{$email}";
+        $endpoint = "/automation/v2/workflows/{$workflow_id}/enrollments/contacts/{$email}";
 
-        return $this->request('get', $endpoint);
+        return $this->request('post', $endpoint);
     }
 
     /**
