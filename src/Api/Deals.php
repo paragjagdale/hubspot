@@ -16,6 +16,7 @@ class Deals extends Api
      *
      * @return mixed
      */
+
     public function all($params)
     {
         $endpoint = "/deals/v1/pipelines";
@@ -28,6 +29,38 @@ class Deals extends Api
         }
 
         $options['query'] = $this->getQuery($params);
+
+        return $this->request('get', $endpoint, $options, $queryString);
+    }
+
+
+
+    /**
+     * Get contact property group.
+     *
+     * Returns all of the contact property groups for a given portal.
+     *
+     * @param bool $includeProperties Include the properties in the response?
+     *
+     * @link http://developers.hubspot.com/docs/methods/contacts/v2/get_contact_property_groups
+     *
+     * @return mixed
+     */
+    public function getGroups($includeProperties = false)
+    {
+        $endpoint = "/deals/v1/groups";
+
+        if (isset($params['property']) && is_array($params['property'])) {
+            $queryString = $this->generateBatchQuery('property', $params['property']);
+            unset($params['property']);
+        } else {
+            $queryString = null;
+        }
+        if($includeProperties){
+         $queryString = $queryString. "&includeProperties=".$includeProperties;
+        }
+
+        $options['query'] = array('includeProperties' => $includeProperties);
 
         return $this->request('get', $endpoint, $options, $queryString);
     }
