@@ -34,7 +34,7 @@ class DealProperties extends Api
      */
     public function get($name)
     {
-        $endpoint = "/contacts/v2/properties/named/{$name}";
+        $endpoint = "deals/v1/properties/named/{$name}";
 
         return $this->request('get', $endpoint);
     }
@@ -53,7 +53,7 @@ class DealProperties extends Api
      */
     public function create(array $property)
     {
-        $endpoint = "/contacts/v2/properties";
+        $endpoint = "/deals/v1/properties/";
 
         $options['json'] = $property;
 
