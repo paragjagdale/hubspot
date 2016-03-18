@@ -17,8 +17,7 @@ class Deals extends Api
      * @return mixed
      */
 
-    public function all($params)
-    {
+    public function allPipelines($params){
         $endpoint = "/deals/v1/pipelines";
 
         if (isset($params['property']) && is_array($params['property'])) {
