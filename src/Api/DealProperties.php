@@ -71,7 +71,7 @@ class DealProperties extends Api
      */
     public function update(array $property)
     {
-        $endpoint = "/contacts/v2/properties/named/{$property['name']}";
+        $endpoint = "/deals/v1/properties/named/{$property['name']}";
 
         $options['json'] = $property;
 
