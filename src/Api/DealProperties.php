@@ -109,7 +109,7 @@ class DealProperties extends Api
      */
     public function getGroup($includeProperties = false)
     {
-        $endpoint = "/contacts/v2/groups";
+        $endpoint = "/deals/v1/groups";
 
         $options['query'] = array('includeProperties' => $includeProperties);
 
