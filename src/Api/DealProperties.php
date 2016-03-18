@@ -150,7 +150,7 @@ class DealProperties extends Api
      */
     public function updateGroup(array $group)
     {
-        $endpoint = "/contacts/v2/groups/named/{$group['name']}";
+        $endpoint = "/deals/v1/groups/named/{$group['name']}";
 
         $options['json'] = $group;
 
