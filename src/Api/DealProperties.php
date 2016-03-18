@@ -91,7 +91,7 @@ class DealProperties extends Api
      */
     public function delete($name)
     {
-        $endpoint = "/contacts/v2/properties/named/{$name}";
+        $endpoint = "/deals/v1/properties/named/{$name}";
 
         return $this->request('delete', $endpoint);
     }
