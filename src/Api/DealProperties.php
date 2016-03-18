@@ -117,6 +117,26 @@ class DealProperties extends Api
     }
 
     /**
+     * Get contact property group by name.
+     *
+     * Returns  deal property group for a given portal by name.
+     *
+     * @param bool $includeProperties Include the properties in the response?
+     *
+     * @link http://developers.hubspot.com/docs/methods/contacts/v2/get_contact_property_groups
+     *
+     * @return mixed
+     */
+    public function getGroupByName($name, $includeProperties = false)
+    {
+        $endpoint = "/deals/v1/groups/named/{$name}";
+
+        $options['query'] = array('includeProperties' => $includeProperties);
+
+        return $this->request('get', $endpoint, $options);
+    }
+
+    /**
      * Create a contact property group.
      *
      * Create a new contact property group to gather like contact-level data. Property groups allow you to more
