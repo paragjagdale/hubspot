@@ -190,7 +190,7 @@ class DealProperties extends Api
      */
     public function deleteGroup($name)
     {
-        $endpoint = "/contacts/v2/groups/named/{$name}";
+        $endpoint = "/deals/v1/groups/named/{$name}";
 
         return $this->request('delete', $endpoint);
     }
