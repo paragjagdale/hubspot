@@ -34,7 +34,7 @@ class DealProperties extends Api
      */
     public function get($name)
     {
-        $endpoint = "deals/v1/properties/named/{$name}";
+        $endpoint = "/deals/v1/properties/named/{$name}";
 
         return $this->request('get', $endpoint);
     }
