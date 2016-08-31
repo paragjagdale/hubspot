@@ -34,7 +34,8 @@ abstract class Api
     /**
      * Default user agent.
      */
-    const USER_AGENT = 'Fungku_HubSpot_PHP/0.9 (https://github.com/fungku/hubspot-php)';
+    //const USER_AGENT = 'Fungku_HubSpot_PHP/0.9 (https://github.com/fungku/hubspot-php)';
+    const USER_AGENT = 'Revenue Conduit';
 
     /**
      * Setup the API
