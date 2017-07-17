@@ -52,12 +52,14 @@ class Client implements HttpClient
         
         if(!empty($options['json'])){
             $response = HttpfulClient::$method($url)
+			->addHeaders($options['headers'])
                             ->body(json_encode($options['json']))
                             ->sendsJson()
                             ->send(); 
         }
         elseif(!empty($options['body'])){
             $response = HttpfulClient::$method($url)
+			->addHeaders($options['headers'])
                             ->body(json_encode($options['body']))
                             ->sendsForm()
                             ->send();
@@ -65,8 +67,9 @@ class Client implements HttpClient
         else
         {
             $response = HttpfulClient::$method($url)
+			->addHeaders($options['headers'])
                             ->send();
-        }            
+        }
         
         return $response->body;
     }
