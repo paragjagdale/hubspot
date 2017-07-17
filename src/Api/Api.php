@@ -62,6 +62,7 @@ abstract class Api
     protected function requestUrl($method, $url, $options)
     {
         $options['headers']['User-Agent'] = self::USER_AGENT;
+	$options['headers']['Authorization'] = 'Bearer '.$this->apiKey;
         return $this->client->$method($url, $options);
     }
 
@@ -94,7 +95,8 @@ abstract class Api
     {
         $authType = $this->oauth ? 'access_token' : 'hapikey';
 
-        return $this->baseUrl . $endpoint . '?'. $authType . '=' . $this->apiKey . $queryString;
+        $ret = $this->baseUrl . $endpoint . '?'. /*$authType . '=' . $this->apiKey .*/ ltrim($queryString, '&');
+	return $ret;
     }
 
     /**
