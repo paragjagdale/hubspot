@@ -94,9 +94,12 @@ abstract class Api
     protected function generateUrl($endpoint, $queryString = null)
     {
         $authType = $this->oauth ? 'access_token' : 'hapikey';
-
-        $ret = $this->baseUrl . $endpoint . '?'. /*$authType . '=' . $this->apiKey .*/ ltrim($queryString, '&');
-	return $ret;
+        if($authType == "hapikey"){
+                $ret = $this->baseUrl . $endpoint . '?'. $authType . '=' . $this->apiKey . ltrim($queryString, '&');
+        }else{
+                $ret = $this->baseUrl . $endpoint . '?'. /*$authType . '=' . $this->apiKey .*/ ltrim($queryString, '&');
+        }
+        return $ret;
     }
 
     /**
